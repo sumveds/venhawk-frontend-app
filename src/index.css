@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-50: #e6f0f9;
+  --color-navy-100: #cce1f3;
+  --color-navy-200: #99c3e7;
+  --color-navy-300: #66a5db;
+  --color-navy-400: #3387cf;
+  --color-navy-500: #0A2540;
+  --color-navy-600: #081e33;
+  --color-navy-700: #061726;
+  --color-navy-800: #04101a;
+  --color-navy-900: #02080d;
+
+  --color-primary-50: #e6f0f9;
+  --color-primary-100: #cce1f3;
+  --color-primary-200: #99c3e7;
+  --color-primary-300: #66a5db;
+  --color-primary-400: #3387cf;
+  --color-primary-500: #0A2540;
+  --color-primary-600: #081e33;
+  --color-primary-700: #061726;
+  --color-primary-800: #04101a;
+  --color-primary-900: #02080d;
+
+  --color-accent-50: #fef3e7;
+  --color-accent-100: #fde7cf;
+  --color-accent-200: #fbcf9f;
+  --color-accent-300: #f9b76f;
+  --color-accent-400: #f79f3f;
+  --color-accent-500: #f5870f;
+  --color-accent-600: #c46c0c;
+  --color-accent-700: #935109;
+  --color-accent-800: #623606;
+  --color-accent-900: #311b03;
+
+  --shadow-soft: 0 2px 8px 0 rgba(10, 37, 64, 0.08);
+  --shadow-medium: 0 4px 12px 0 rgba(10, 37, 64, 0.12);
+  --shadow-hard: 0 8px 24px 0 rgba(10, 37, 64, 0.16);
+}
+
+:root {
+  /* Custom CSS Variables */
+  --color-primary: #0A2540;
+  --color-primary-light: #3387cf;
+  --color-accent: #f5870f;
+  --transition-default: 0.3s ease;
+}
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+    @apply bg-gray-50 text-gray-900;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold;
+  }
+
+  a {
+    @apply text-primary-500 hover:text-primary-600 transition-colors duration-200;
+  }
+}
+
+@layer components {
+  /* Custom component classes can be added here */
+  .btn-primary {
+    @apply bg-navy-500 text-white px-6 py-3 rounded-lg font-medium;
+    @apply hover:bg-navy-600 transition-colors duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-navy-500 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-navy-500 border-2 border-navy-500 px-6 py-3 rounded-lg font-medium;
+    @apply hover:bg-navy-50 transition-colors duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-navy-500 focus:ring-offset-2;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg;
+    @apply focus:ring-2 focus:ring-navy-500 focus:border-transparent;
+    @apply transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-soft p-6;
+    @apply hover:shadow-medium transition-shadow duration-200;
+  }
+}
+
+@layer utilities {
+  /* Custom utility classes */
+  .gradient-navy {
+    background: linear-gradient(135deg, #0A2540 0%, #3387cf 100%);
+  }
+
+  .gradient-accent {
+    background: linear-gradient(135deg, #f5870f 0%, #f9b76f 100%);
+  }
+}
