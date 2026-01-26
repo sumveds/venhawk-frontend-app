@@ -4,6 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useProject } from '../context/ProjectContext';
 import { projectAPI } from '../services/api';
 import Header from '../components/layout/Header';
+import LeftSidebar from '../components/layout/LeftSidebar';
 import Stepper from '../components/common/Stepper';
 import Button from '../components/common/Button';
 import LoadingSpinner from '../components/common/LoadingSpinner';
@@ -162,37 +163,7 @@ const Summary = () => {
       <div className="flex-1 bg-gray-100 overflow-auto">
         <div className="relative min-h-full flex flex-col lg:flex-row">
           {/* Left Section with background */}
-          <div className="lg:w-[28%] px-8 py-8 lg:py-12 relative">
-            {/* Decorative curved lines - fixed at viewport, limited height */}
-            <div className="fixed top-0 left-0 w-[28%] h-[60vh] pointer-events-none opacity-40 hidden lg:block">
-              <svg
-                className="absolute top-0 left-0 w-full h-full"
-                viewBox="0 0 400 600"
-                fill="none"
-                preserveAspectRatio="none"
-              >
-                {Array.from({ length: 40 }).map((_, i) => (
-                  <path
-                    key={i}
-                    d={`M 0 ${300 + i * 8} Q 100 ${250 + i * 8} 200 ${300 + i * 8} T 400 ${300 + i * 8}`}
-                    stroke={i < 20 ? '#9ca3af' : '#fb923c'}
-                    strokeWidth="1"
-                    fill="none"
-                    opacity={i < 20 ? 0.4 : 0.3}
-                  />
-                ))}
-              </svg>
-            </div>
-
-            {/* Vertical Progress Line - fixed at viewport */}
-            <div className="hidden lg:block fixed top-0 left-[28%] h-screen w-1 bg-gradient-to-b from-blue-500 via-blue-400 to-transparent"></div>
-
-            <div className="relative z-10">
-              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6 leading-tight">
-                Let's Find the best Vendors
-              </h1>
-            </div>
-          </div>
+          <LeftSidebar />
 
           {/* Right Section */}
           <div className="flex-1 lg:px-12 px-6 py-8 flex flex-col items-center">
