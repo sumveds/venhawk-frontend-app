@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useProject } from '../context/ProjectContext';
 import { projectAPI } from '../services/api';
+import { getIndustryLabel, getProjectCategoryLabel } from '../constants/projectOptions';
 import Header from '../components/layout/Header';
 import LeftSidebar from '../components/layout/LeftSidebar';
 import Stepper from '../components/common/Stepper';
@@ -19,39 +20,6 @@ const Summary = () => {
   const { projectData, resetProjectData } = useProject();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
-
-  // Get industry and category labels for display
-  const getIndustryLabel = (value) => {
-    const industryMap = {
-      'financial': 'Financial Services',
-      'healthcare': 'Healthcare',
-      'legal': 'Legal',
-      'saas': 'SaaS',
-      'technology': 'Technology',
-      'government': 'Government Agency',
-    };
-    return industryMap[value] || value;
-  };
-
-  const getCategoryLabel = (value) => {
-    const categoryMap = {
-      'erp': 'ERP Implementations (SAP, Oracle, Microsoft Dynamics)',
-      'app-upgrades': 'Application Upgrades (Legacy systems, custom apps, feature rollouts)',
-      'cloud-migration': 'Cloud Migrations (AWS, Azure, GCP, hybrid cloud)',
-      'network': 'Network Infrastructure (LAN/WAN, SD-WAN, VPN)',
-      'security': 'Security Initiatives (IAM, SOC2 compliance, vulnerability management)',
-      'collaboration': 'Collaboration Tools Deployment (Microsoft Teams, SharePoint, Slack, Google Workspace)',
-      'data-analytics': 'Data & Analytics / BI (Data warehouses, dashboards, AI/ML pipelines)',
-      'disaster-recovery': 'Disaster Recovery / Business Continuity (DR planning, backup, failover systems)',
-      'itsm': 'IT Service Management / ITSM (ServiceNow, ticketing system)',
-      'endpoint': 'Endpoint Management / Device Upgrades (laptops, desktops, MDM)',
-      'database': 'Database Migration / Optimization (SQL/NoSQL migration, tuning)',
-      'virtualization': 'Infrastructure Virtualization (VMware, Hyper-V, containers)',
-      'cloud-security': 'Cloud Security / Compliance (cloud governance, policies, regulatory compliance)',
-      'other': projectData.projectCategoryOther || 'Other',
-    };
-    return categoryMap[value] || value;
-  };
 
   const handleEdit = () => {
     // Navigate back to first step to edit
@@ -227,7 +195,7 @@ const Summary = () => {
                   {/* Project Category */}
                   <div>
                     <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">Project Category</h3>
-                    <p className="text-base text-gray-900 font-semibold">{getCategoryLabel(projectData.projectCategory)}</p>
+                    <p className="text-base text-gray-900 font-semibold">{getProjectCategoryLabel(projectData.projectCategory, projectData.projectCategoryOther)}</p>
                   </div>
 
                   {/* Project Objective */}

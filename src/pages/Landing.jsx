@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProject } from '../context/ProjectContext';
+import { INDUSTRY_OPTIONS, PROJECT_CATEGORY_OPTIONS } from '../constants/projectOptions';
 import Header from '../components/layout/Header';
 import LeftSidebar from '../components/layout/LeftSidebar';
 import Stepper from '../components/common/Stepper';
@@ -30,40 +31,14 @@ const Landing = () => {
     fileUploads: projectData.fileUploads,
   };
 
-  const industryOptions = [
-    // { value: 'financial', label: 'Financial Services' },
-    // { value: 'healthcare', label: 'Healthcare' },
-    { value: 'legal', label: 'Legal' },
-    // { value: 'saas', label: 'SaaS' },
-    // { value: 'technology', label: 'Technology' },
-    // { value: 'government', label: 'Government Agency' },
-  ];
-
-  const projectCategoryOptions = [
-    { value: 'erp', label: 'ERP Implementations (SAP, Oracle, Microsoft Dynamics)' },
-    { value: 'app-upgrades', label: 'Application Upgrades (Legacy systems, custom apps, feature rollouts)' },
-    { value: 'cloud-migration', label: 'Cloud Migrations (AWS, Azure, GCP, hybrid cloud)' },
-    { value: 'network', label: 'Network Infrastructure (LAN/WAN, SD-WAN, VPN)' },
-    { value: 'security', label: 'Security Initiatives (IAM, SOC2 compliance, vulnerability management)' },
-    // { value: 'collaboration', label: 'Collaboration Tools Deployment (Microsoft Teams, SharePoint, Slack, Google Workspace)' },
-    { value: 'data-analytics', label: 'Data & Analytics / BI (Data warehouses, dashboards, AI/ML pipelines)' },
-    { value: 'disaster-recovery', label: 'Disaster Recovery / Business Continuity (DR planning, backup, failover systems)' },
-    { value: 'itsm', label: 'IT Service Management / ITSM (ServiceNow, ticketing system)' },
-    { value: 'endpoint', label: 'Endpoint Management / Device Upgrades (laptops, desktops, MDM)' },
-    // { value: 'database', label: 'Database Migration / Optimization (SQL/NoSQL migration, tuning)' },
-    // { value: 'virtualization', label: 'Infrastructure Virtualization (VMware, Hyper-V, containers)' },
-    { value: 'cloud-security', label: 'Cloud Security / Compliance (cloud governance, policies, regulatory compliance)' },
-    { value: 'other', label: 'Other' },
-  ];
-
   const handleChange = (field, value) => {
     updateProjectData({ [field]: value });
   };
 
   // Set default industry if not already set
   useEffect(() => {
-    if (!formData.clientIndustry && industryOptions.length === 1) {
-      updateProjectData({ clientIndustry: industryOptions[0].value });
+    if (!formData.clientIndustry && INDUSTRY_OPTIONS.length === 1) {
+      updateProjectData({ clientIndustry: INDUSTRY_OPTIONS[0].value });
     }
   }, []);
 
@@ -129,7 +104,7 @@ const Landing = () => {
                   <Dropdown
                     label="Client Industry"
                     name="clientIndustry"
-                    options={industryOptions}
+                    options={INDUSTRY_OPTIONS}
                     value={formData.clientIndustry}
                     onChange={(e) => handleChange('clientIndustry', e.target.value)}
                     placeholder="Select industry"
@@ -149,7 +124,7 @@ const Landing = () => {
                     <SearchableDropdown
                       label="Project Category"
                       name="projectCategory"
-                      options={projectCategoryOptions}
+                      options={PROJECT_CATEGORY_OPTIONS}
                       value={formData.projectCategory}
                       onChange={(e) => handleChange('projectCategory', e.target.value)}
                       placeholder="Search for project category..."
