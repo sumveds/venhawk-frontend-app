@@ -161,7 +161,7 @@ const Landing = () => {
                   <Input
                     label="Project Title"
                     name="projectTitle"
-                    placeholder="ServiceNow Implementation"
+                    placeholder="Intapp Cloud Migration"
                     value={formData.projectTitle}
                     onChange={(e) => handleChange('projectTitle', e.target.value)}
                     required
@@ -194,9 +194,10 @@ const Landing = () => {
                     label="Project Objective"
                     name="projectObjective"
                     rows={3}
-                    placeholder="Describe the main objective of this project in 2-5 sentences..."
+                    placeholder="Migrate our existing on-prem Intapp application to the cloud to improve scalability, reliability, and performance while reducing infrastructure maintenance and operational risk."
                     value={formData.projectObjective}
                     onChange={(e) => handleChange('projectObjective', e.target.value)}
+                    tooltip="What is the primary outcome of this project? Describe the business goal and success criteria. Avoid technical implementation details."
                     required
                   />
 
@@ -204,9 +205,10 @@ const Landing = () => {
                     label="Business Requirements"
                     name="businessRequirements"
                     rows={4}
-                    placeholder="Describe your business requirements..."
+                    placeholder="The solution must support legal and finance teams across multiple offices, minimize downtime during migration, meet data security and retention requirements, and align with internal IT governance and change-management processes."
                     value={formData.businessRequirements}
                     onChange={(e) => handleChange('businessRequirements', e.target.value)}
+                    tooltip="What does the business need from this project? Include scope, users, compliance needs, and operational constraints. Exclude technical specifics."
                     required
                   />
 
@@ -214,9 +216,10 @@ const Landing = () => {
                     label="Technical Requirements"
                     name="technicalRequirements"
                     rows={4}
-                    placeholder="Describe your technical requirements (optional)..."
+                    placeholder="Preference for Azure cloud environment. Must integrate with Microsoft Entra ID, Exchange Online, and existing monitoring tools. Hybrid deployment acceptable during transition."
                     value={formData.technicalRequirements}
                     onChange={(e) => handleChange('technicalRequirements', e.target.value)}
+                    tooltip="List known technical constraints or preferences. If unsure, leave this blank—vendors can help define the approach."
                   />
 
                   <div>
