@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useProject } from '../context/ProjectContext';
-import Header from '../components/layout/Header';
-import LeftSidebar from '../components/layout/LeftSidebar';
-import Stepper from '../components/common/Stepper';
-import Input from '../components/common/Input';
-import DatePicker from '../components/common/DatePicker';
-import Button from '../components/common/Button';
+import { useProject } from '../../context/ProjectContext';
+import Header from '../../components/layout/Header';
+import LeftSidebar from '../../components/layout/LeftSidebar';
+import Stepper from '../../components/common/Stepper';
+import Input from '../../components/common/Input';
+import DatePicker from '../../components/common/DatePicker';
+import Button from '../../components/common/Button';
 
 /**
  * Budget & Timeline Page Component

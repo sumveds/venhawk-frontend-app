@@ -156,6 +156,35 @@ export const fileAPI = {
 
     return await response.json();
   },
+
+  /**
+   * Delete a file from Supabase
+   * @param {string} fileUrl - Full URL of the file to delete
+   * @param {string} accessToken - Auth0 access token
+   * @returns {Promise<Object>} Delete response
+   */
+  deleteFile: async (fileUrl, accessToken) => {
+    const response = await fetch(`${API_BASE_URL}/files`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ fileUrl }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ message: 'File deletion failed' }));
+      throw new Error(error.message || `HTTP error! status: ${response.status}`);
+    }
+
+    // 204 No Content has no response body
+    if (response.status === 204) {
+      return { success: true };
+    }
+
+    return await response.json();
+  },
 };
 
 export default {

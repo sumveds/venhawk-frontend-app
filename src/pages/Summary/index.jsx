@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useProject } from '../context/ProjectContext';
-import { projectAPI } from '../services/api';
-import { getIndustryLabel, getProjectCategoryLabel } from '../constants/projectOptions';
-import Header from '../components/layout/Header';
-import LeftSidebar from '../components/layout/LeftSidebar';
-import Stepper from '../components/common/Stepper';
-import Button from '../components/common/Button';
-import LoadingSpinner from '../components/common/LoadingSpinner';
+import { useProject } from '../../context/ProjectContext';
+import { projectAPI } from '../../services/api';
+import { getIndustryLabel, getProjectCategoryLabel } from '../../constants/projectOptions';
+import Header from '../../components/layout/Header';
+import LeftSidebar from '../../components/layout/LeftSidebar';
+import Stepper from '../../components/common/Stepper';
+import Button from '../../components/common/Button';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
 
 /**
  * Summary Page Component

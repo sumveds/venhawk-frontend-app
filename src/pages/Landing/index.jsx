@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useProject } from '../context/ProjectContext';
-import { INDUSTRY_OPTIONS, PROJECT_CATEGORY_OPTIONS } from '../constants/projectOptions';
-import { fileAPI } from '../services/api';
-import Header from '../components/layout/Header';
-import LeftSidebar from '../components/layout/LeftSidebar';
-import Stepper from '../components/common/Stepper';
-import Input from '../components/common/Input';
-import Dropdown from '../components/common/Dropdown';
-import SearchableDropdown from '../components/common/SearchableDropdown';
-import Textarea from '../components/common/Textarea';
-import Button from '../components/common/Button';
+import { useProject } from '../../context/ProjectContext';
+import { INDUSTRY_OPTIONS, PROJECT_CATEGORY_OPTIONS } from '../../constants/projectOptions';
+import { fileAPI } from '../../services/api';
+import Header from '../../components/layout/Header';
+import LeftSidebar from '../../components/layout/LeftSidebar';
+import Stepper from '../../components/common/Stepper';
+import Input from '../../components/common/Input';
+import Dropdown from '../../components/common/Dropdown';
+import SearchableDropdown from '../../components/common/SearchableDropdown';
+import Textarea from '../../components/common/Textarea';
+import Button from '../../components/common/Button';
 
 /**
  * Landing Page Component
@@ -26,6 +26,7 @@ const Landing = () => {
   const [uploadingFiles, setUploadingFiles] = useState([]);
   const [uploadError, setUploadError] = useState('');
   const [isDragging, setIsDragging] = useState(false);
+  const [deletingFileIndex, setDeletingFileIndex] = useState(null);
 
   // Local state for this page's fields
   const formData = {
@@ -141,11 +142,32 @@ const Landing = () => {
   };
 
   // Remove uploaded file
-  const handleRemoveFile = (index) => {
-    updateProjectData((prevData) => ({
-      ...prevData,
-      fileUploads: prevData.fileUploads.filter((_, i) => i !== index),
-    }));
+  const handleRemoveFile = async (index) => {
+    const fileToRemove = formData.fileUploads[index];
+
+    // Set deleting state to show spinner
+    setDeletingFileIndex(index);
+    setUploadError('');
+
+    try {
+      // Get access token
+      const accessToken = await getAccessTokenSilently();
+
+      // Call DELETE API to remove file from Supabase
+      await fileAPI.deleteFile(fileToRemove.fileUrl, accessToken);
+
+      // Remove from context after successful API call
+      updateProjectData((prevData) => ({
+        ...prevData,
+        fileUploads: prevData.fileUploads.filter((_, i) => i !== index),
+      }));
+    } catch (error) {
+      console.error('File deletion error:', error);
+      setUploadError(`Failed to delete ${fileToRemove.fileName}: ${error.message}`);
+    } finally {
+      // Clear deleting state
+      setDeletingFileIndex(null);
+    }
   };
 
   // Set default industry if not already set
@@ -402,12 +424,19 @@ const Landing = () => {
                                 <button
                                   type="button"
                                   onClick={() => handleRemoveFile(index)}
-                                  className="ml-1 text-red-500 hover:text-red-700 transition-colors opacity-70 group-hover:opacity-100"
+                                  className="ml-1 text-red-500 hover:text-red-700 transition-colors opacity-70 group-hover:opacity-100 cursor-pointer"
                                   title="Remove file"
+                                  disabled={deletingFileIndex === index}
                                 >
-                                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                  </svg>
+                                  {deletingFileIndex === index ? (
+                                    <svg className="w-3.5 h-3.5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    </svg>
+                                  ) : (
+                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                  )}
                                 </button>
                               </div>
                             ))}
