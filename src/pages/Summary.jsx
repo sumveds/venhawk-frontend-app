@@ -44,6 +44,9 @@ const Summary = () => {
       businessRequirements: data.businessRequirements,
       technicalRequirements: data.technicalRequirements || undefined,
 
+      // File uploads - Send array of file URLs
+      fileUrls: data.fileUploads?.map(file => file.fileUrl) || [],
+
       // Page 2 fields - Transform dates from mm/dd/yyyy to yyyy-mm-dd
       startDate: data.startDate ? convertToISODate(data.startDate) : undefined,
       endDate: data.endDate ? convertToISODate(data.endDate) : undefined,
@@ -93,14 +96,9 @@ const Summary = () => {
       // Transform and prepare project data for API
       const apiPayload = transformDataForBackend(projectData);
 
-      // Submit project data
+      // Submit project data (files are already uploaded, URLs are included in payload)
       const response = await projectAPI.submitProject(apiPayload, accessToken);
       console.log('Project submitted successfully:', response);
-
-      // If there are files, upload them
-      if (projectData.fileUploads && projectData.fileUploads.length > 0 && response.id) {
-        await projectAPI.uploadFiles(response.id, projectData.fileUploads, accessToken);
-      }
 
       // Clear the form data
       resetProjectData();
@@ -224,15 +222,21 @@ const Summary = () => {
                       <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">Uploaded Files</h3>
                       <div className="flex flex-wrap gap-2">
                         {projectData.fileUploads.map((file, index) => (
-                          <div
+                          <a
                             key={index}
-                            className="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full px-3 py-1.5 text-sm font-medium shadow-sm hover:shadow-md transition-all duration-200"
+                            href={file.fileUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-full px-3 py-1.5 text-sm font-medium shadow-sm hover:shadow-md transition-all duration-200"
                           >
                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                             </svg>
-                            <span className="font-semibold">{file.name}</span>
-                          </div>
+                            <span className="font-semibold">{file.fileName}</span>
+                            <span className="text-xs text-blue-600">
+                              {(file.fileSize / 1024).toFixed(1)} KB
+                            </span>
+                          </a>
                         ))}
                       </div>
                     </div>

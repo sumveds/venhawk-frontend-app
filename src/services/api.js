@@ -127,7 +127,39 @@ export const userAPI = {
   },
 };
 
+/**
+ * File API Service
+ */
+export const fileAPI = {
+  /**
+   * Upload a single file to Supabase
+   * @param {File} file - File object to upload
+   * @param {string} accessToken - Auth0 access token
+   * @returns {Promise<Object>} File upload response with fileUrl, fileName, fileSize, mimeType
+   */
+  uploadFile: async (file, accessToken) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${API_BASE_URL}/files/upload`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ message: 'File upload failed' }));
+      throw new Error(error.message || `HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  },
+};
+
 export default {
   projectAPI,
   userAPI,
+  fileAPI,
 };
