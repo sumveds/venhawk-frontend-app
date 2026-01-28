@@ -30,9 +30,13 @@ export const ProjectProvider = ({ children }) => {
     maxBudget: '',
   });
 
-  // Update specific fields
+  // Update specific fields - supports both object and function
   const updateProjectData = (updates) => {
-    setProjectData(prev => ({ ...prev, ...updates }));
+    if (typeof updates === 'function') {
+      setProjectData(updates);
+    } else {
+      setProjectData(prev => ({ ...prev, ...updates }));
+    }
   };
 
   // Reset all data
