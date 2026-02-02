@@ -43,42 +43,42 @@ const VendorCard = ({ vendor }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-lg transition-shadow duration-200 relative">
+    <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4 hover:shadow-lg transition-shadow duration-200 relative">
       {/* Tier Badge */}
-      <div className="absolute top-4 right-4 bg-gray-100 text-gray-700 px-2.5 py-0.5 rounded-full text-xs font-medium">
+      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-gray-100 text-gray-700 px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-medium">
         {vendor.tier}
       </div>
 
       {/* Vendor Logo */}
-      <div className="flex items-start gap-3 mb-3">
-        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+      <div className="flex items-start gap-2 sm:gap-3 mb-2 sm:mb-3">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-base sm:text-lg flex-shrink-0">
           {vendor.logo}
         </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-base text-gray-900 mb-1">{vendor.name}</h3>
-          <p className="text-xs text-gray-600 mb-0.5">{vendor.category}</p>
-          <p className="text-xs text-gray-500">{vendor.location}</p>
+        <div className="flex-1 min-w-0 pr-12 sm:pr-0">
+          <h3 className="font-semibold text-sm sm:text-base text-gray-900 mb-1 truncate">{vendor.name}</h3>
+          <p className="text-xs text-gray-600 mb-0.5 truncate">{vendor.category}</p>
+          <p className="text-xs text-gray-500 truncate">{vendor.location}</p>
         </div>
       </div>
 
       {/* Rating */}
       <div className="flex items-center gap-2 mb-2">
         <div className="flex">{renderStars(vendor.rating)}</div>
-        <span className="text-sm font-medium text-gray-700">{vendor.rating}</span>
+        <span className="text-xs sm:text-sm font-medium text-gray-700">{vendor.rating}</span>
       </div>
 
       {/* Description */}
-      <p className="text-sm text-gray-600 mb-3 line-clamp-2">{vendor.description}</p>
+      <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 line-clamp-2">{vendor.description}</p>
 
       {/* Specialty and Price */}
-      <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-        <div>
-          <p className="text-xs text-gray-500 mb-1">Specialty</p>
-          <p className="text-sm font-medium text-gray-900">{vendor.specialty}</p>
+      <div className="flex items-center justify-between pt-2 sm:pt-3 border-t border-gray-100">
+        <div className="flex-1 min-w-0 pr-2">
+          <p className="text-xs text-gray-500 mb-0.5 sm:mb-1">Specialty</p>
+          <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">{vendor.specialty}</p>
         </div>
-        <div className="text-right">
-          <p className="text-xs text-gray-500 mb-1">Start From</p>
-          <p className="text-sm font-semibold text-blue-600">{vendor.startFrom}</p>
+        <div className="text-right flex-shrink-0">
+          <p className="text-xs text-gray-500 mb-0.5 sm:mb-1">Start From</p>
+          <p className="text-xs sm:text-sm font-semibold text-blue-600 whitespace-nowrap">{vendor.startFrom}</p>
         </div>
       </div>
     </div>

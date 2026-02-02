@@ -11,6 +11,7 @@ const Vendors = () => {
   const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
 
   // Simulate API call to fetch vendors
   useEffect(() => {
@@ -33,13 +34,26 @@ const Vendors = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
 
-      <div className="max-w-[1600px] mx-auto px-6 py-8">
-        {/* Page Title */}
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Procurement</h1>
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        {/* Page Title and Mobile Filter Button */}
+        <div className="flex items-center justify-between mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Procurement</h1>
 
-        <div className="flex gap-8">
-          {/* Sidebar Filters */}
-          <aside className="w-80 flex-shrink-0">
+          {/* Mobile Filter Toggle Button */}
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="lg:hidden flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            </svg>
+            Filters
+          </button>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+          {/* Sidebar Filters - Hidden on mobile, visible on desktop */}
+          <aside className={`${showFilters ? 'block' : 'hidden'} lg:block w-full lg:w-80 flex-shrink-0`}>
             <div className="bg-gray-50 rounded-lg shadow-sm overflow-hidden">
               <div className="flex items-center justify-between px-6 py-4 bg-gray-50">
                 <h3 className="text-base font-semibold text-gray-900">Filters</h3>
@@ -93,16 +107,16 @@ const Vendors = () => {
           </aside>
 
           {/* Vendor Grid */}
-          <main className="flex-1">
+          <main className="flex-1 w-full">
             {loading ? (
-              <div className="flex items-center justify-center h-96">
+              <div className="flex items-center justify-center h-64 sm:h-96">
                 <div className="text-center">
-                  <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-                  <p className="text-gray-600 font-medium">Finding perfect vendors for you...</p>
+                  <div className="inline-block animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-blue-600 mb-4"></div>
+                  <p className="text-sm sm:text-base text-gray-600 font-medium px-4">Finding perfect vendors for you...</p>
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {filteredVendors.map((vendor) => (
                   <VendorCard key={vendor.id} vendor={vendor} />
                 ))}
