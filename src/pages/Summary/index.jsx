@@ -29,7 +29,7 @@ const hasRequiredProjectData = (data) => {
 const Summary = () => {
   const navigate = useNavigate();
   const { getAccessTokenSilently } = useAuth0();
-  const { projectData } = useProject();
+  const { projectData, updateProjectData } = useProject();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
@@ -121,6 +121,11 @@ const Summary = () => {
       // Submit project and get matched vendors
       const response = await projectAPI.submitProject(apiPayload, accessToken);
       console.log('Project submitted successfully:', response);
+
+      // Store matched vendors in context
+      if (response.matchedVendors) {
+        updateProjectData({ matchedVendors: response.matchedVendors });
+      }
 
       // Navigate to vendors page to display results
       navigate('/vendors');

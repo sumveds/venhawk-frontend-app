@@ -29,6 +29,9 @@ export const ProjectProvider = ({ children }) => {
     totalBudget: '',
     minBudget: '',
     maxBudget: '',
+
+    // Matched vendors from API response
+    matchedVendors: [],
   });
 
   // Update specific fields - supports both object and function
@@ -59,6 +62,7 @@ export const ProjectProvider = ({ children }) => {
       totalBudget: '',
       minBudget: '',
       maxBudget: '',
+      matchedVendors: [],
     });
   };
 

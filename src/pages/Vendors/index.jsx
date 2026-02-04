@@ -1,31 +1,45 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useProject } from '../../context/ProjectContext';
 import Header from '../../components/layout/Header';
 import VendorCard from './components/VendorCard';
 import VenAISearchBanner from './components/VenAISearchBanner';
-import { mockVendors } from './mockVendors';
+import EmptyState from './components/EmptyState';
 
 /**
  * Vendors Page Component
  * @description Displays matched vendors with filters
  */
 const Vendors = () => {
+  const navigate = useNavigate();
+  const { projectData } = useProject();
   const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
-  // Simulate API call to fetch vendors
+  // Load vendors from context
   useEffect(() => {
-    const fetchVendors = async () => {
+    // If matchedVendors is undefined, user accessed /vendors directly without submission
+    // In this case, redirect to landing page
+    if (projectData.matchedVendors === undefined) {
+      navigate('/');
+      return;
+    }
+
+    // If matchedVendors is an empty array, show empty state (don't redirect)
+    // If matchedVendors has items, show them
+    const loadVendors = async () => {
       setLoading(true);
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setVendors(mockVendors);
+      await new Promise(resolve => setTimeout(resolve, 800));
+      // TODO: REMOVE THIS LINE AFTER TESTING - Forces empty state for testing
+      // setVendors([]);
+      setVendors(projectData.matchedVendors || []);
       setLoading(false);
     };
 
-    fetchVendors();
-  }, []);
+    loadVendors();
+  }, [projectData.matchedVendors, navigate]);
 
   const filteredVendors = vendors.filter(vendor =>
     vendor.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -119,6 +133,8 @@ const Vendors = () => {
                   <p className="text-sm sm:text-base text-gray-600 font-medium px-4">Finding perfect vendors for you...</p>
                 </div>
               </div>
+            ) : filteredVendors.length === 0 ? (
+              <EmptyState />
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {filteredVendors.map((vendor) => (
