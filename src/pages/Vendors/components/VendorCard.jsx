@@ -76,30 +76,34 @@ const VendorCard = ({ vendor }) => {
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4 hover:shadow-lg transition-shadow duration-200 relative">
-      {/* Top Badges */}
-      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 flex items-center gap-2">
-        {/* Matching Score Badge */}
-        {matchColors && (
+      {/* Matching Score Badge */}
+      {matchColors && (
+        <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
           <div className={`${matchColors.bg} ${matchColors.text} px-2.5 py-1 rounded-full text-xs font-bold shadow-sm ring-2 ${matchColors.ring} flex items-center gap-1`}>
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span>{vendor.matchingScore}%</span>
           </div>
-        )}
-
-        {/* Tier Badge */}
-        <div className="bg-gray-100 text-gray-700 px-2 sm:px-2.5 py-0.5 rounded-full text-xs font-medium">
-          {vendor.tier}
         </div>
-      </div>
+      )}
 
       {/* Vendor Logo */}
       <div className="flex items-start gap-2 sm:gap-3 mb-2 sm:mb-3">
-        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-base sm:text-lg flex-shrink-0">
-          {vendor.logo}
-        </div>
-        <div className="flex-1 min-w-0 pr-24 sm:pr-32">
+        {vendor.logoUrl ? (
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden bg-white border border-gray-200">
+            <img
+              src={vendor.logoUrl}
+              alt={`${vendor.name} logo`}
+              className="w-full h-full object-contain p-1"
+            />
+          </div>
+        ) : (
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-base sm:text-lg flex-shrink-0">
+            {vendor.logo}
+          </div>
+        )}
+        <div className="flex-1 min-w-0 pr-16 sm:pr-20">
           <h3 className="font-semibold text-sm sm:text-base text-gray-900 mb-1 truncate">{vendor.name}</h3>
           <p className="text-xs text-gray-600 mb-0.5 truncate">{vendor.category}</p>
           <p className="text-xs text-gray-500 truncate">{vendor.location}</p>
